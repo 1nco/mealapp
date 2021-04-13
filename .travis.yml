@@ -1,30 +1,41 @@
 language: android
 android:
   components:
-    - build-tools-28.0.3
-    - android-28
+    - build-tools-30.0.3
+    - android-30
     - android-21
     - add-on
     - extra
     - platform-tools
     - tools
-    - extra-google-googleplayservices
+    - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-28
+    - addon-google_apis-google-30
     - sys-img-armeabi-v7a-android-21
+
+env:
+  global:
+    - MALLOC_ARENA_MAX=2
+
+sudo: required
+
 before_install:
   - yes | sdkmanager "platforms;android-28"
+  - chmod +x gradlew
+
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a -s "768x1280"
+  - emulator -avd test -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &
+
+script: ./gradlew :app:build :app:connectedDebugAndroidTest
+
 deploy:
   provider: releases
-  apikey: $GITHUB_KEY
+  api_key: $GITHUB_KEY
   file: app/build/outputs/apk/release/app-release.apk
   skip_cleanup: true
   on:
     tags: true
-notifications:
-  email:
-    recipients:
-    - palko9711@gmail.com
-    on_success: always
-    on_failure: always
