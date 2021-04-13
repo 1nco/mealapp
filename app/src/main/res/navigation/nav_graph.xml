@@ -8,8 +8,9 @@
     <fragment
         android:id="@+id/nav_category"
         android:name="com.mobilsoftlab.mealapp.view.category.CategoryFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/nav_category"
         tools:layout="@layout/category_layout"/>
+
 
 <!--        <action-->
 <!--            android:id="@+id/action_FirstFragment_to_SecondFragment"-->

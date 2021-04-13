@@ -1,6 +1,7 @@
 package com.mobilsoftlab.mealapp;
 
 import com.mobilsoftlab.mealapp.view.ViewModule;
+import com.mobilsoftlab.mealapp.view.category.CategoryActivity;
 
 import javax.inject.Singleton;
 
@@ -10,6 +11,6 @@ import dagger.Component;
 @Component(modules = ViewModule.class)
 public interface MealApplicationComponent {
 
-    void inject(MainActivity mainActivity);
+    void inject(CategoryActivity categoryActivity);
 
 }

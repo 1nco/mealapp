@@ -10,7 +10,7 @@ public class CategoryViewModel extends ViewModel {
 
     public CategoryViewModel() {
         text = new MutableLiveData<>();
-        text.setValue("This is the category fragment fragment");
+        text.setValue("This is the category fragment");
     }
 
     public LiveData<String> getText() {
