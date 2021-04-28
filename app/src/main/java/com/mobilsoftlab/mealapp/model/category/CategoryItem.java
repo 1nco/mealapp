@@ -1,11 +1,15 @@
 package com.mobilsoftlab.mealapp.model.category;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "CategoryItem")
 public class CategoryItem {
 
+    @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "id")
     public String id;
 
