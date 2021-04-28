@@ -14,6 +14,13 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mobilsoftlab.mealapp.R;
+import com.mobilsoftlab.mealapp.network.io.swagger.client.ApiClient;
+import com.mobilsoftlab.mealapp.network.io.swagger.client.ApiException;
+import com.mobilsoftlab.mealapp.network.io.swagger.client.api.MealApi;
+import com.mobilsoftlab.mealapp.network.io.swagger.client.model.CategoryList;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 public class CategoryActivity extends AppCompatActivity {
 
