@@ -1,5 +1,6 @@
 package com.mobilsoftlab.mealapp.view.category;
 
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,15 +15,13 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mobilsoftlab.mealapp.R;
-import com.mobilsoftlab.mealapp.network.io.swagger.client.ApiClient;
-import com.mobilsoftlab.mealapp.network.io.swagger.client.ApiException;
-import com.mobilsoftlab.mealapp.network.io.swagger.client.api.MealApi;
-import com.mobilsoftlab.mealapp.network.io.swagger.client.model.CategoryList;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
+import javax.inject.Inject;
 
 public class CategoryActivity extends AppCompatActivity {
+
+    @Inject
+    CategoryPresenter categoryPresenter;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -73,5 +72,15 @@ public class CategoryActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

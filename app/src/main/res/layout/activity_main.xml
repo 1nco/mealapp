@@ -21,4 +21,12 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/navigation_drawer" />
+
+    <fragment
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:layout="@layout/category_layout"
+        class="com.mobilsoftlab.mealapp.view.category.CategoryFragment"/>
 </androidx.drawerlayout.widget.DrawerLayout>
