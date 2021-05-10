@@ -1,11 +1,16 @@
 package com.mobilsoftlab.mealapp.view.category;
 
+
+import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.Group;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -14,15 +19,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mobilsoftlab.mealapp.R;
-import com.mobilsoftlab.mealapp.network.io.swagger.client.ApiClient;
-import com.mobilsoftlab.mealapp.network.io.swagger.client.ApiException;
-import com.mobilsoftlab.mealapp.network.io.swagger.client.api.MealApi;
-import com.mobilsoftlab.mealapp.network.io.swagger.client.model.CategoryList;
+import com.mobilsoftlab.mealapp.view.meals.MealsActivity;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 
 public class CategoryActivity extends AppCompatActivity {
+
+
+    public static final String KEY_CATEGORY = "KEY_CATEGORY";
+    private Group navGroup;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -35,6 +39,14 @@ public class CategoryActivity extends AppCompatActivity {
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+//        navGroup = findViewById(R.id.nav_category);
+//        navGroup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(CategoryActivity.this, CategoryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -74,4 +86,10 @@ public class CategoryActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    public void goToCategory(MenuItem item) {
+        Intent intent = new Intent(CategoryActivity.this, CategoryActivity.class);
+        startActivity(intent);
+    }
+
 }
