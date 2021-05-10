@@ -1,11 +1,14 @@
 package com.mobilsoftlab.mealapp.view.meals;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.Group;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -14,6 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mobilsoftlab.mealapp.R;
+import com.mobilsoftlab.mealapp.view.category.CategoryActivity;
 
 public class MealsActivity extends AppCompatActivity {
 
@@ -42,7 +46,6 @@ public class MealsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -66,5 +69,16 @@ public class MealsActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(MealsActivity.this, CategoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToCategory(MenuItem item) {
+        Intent intent = new Intent(MealsActivity.this, CategoryActivity.class);
+        startActivity(intent);
     }
 }

@@ -22,7 +22,6 @@ import java.util.List;
 public class MealsFragment extends Fragment implements MealsScreen {
     private RecyclerView recyclerViewMeals;
     private SwipeRefreshLayout swipeRefreshLayoutArtists;
-//    private TextView tvEmpty;
     private List<Meal> mealList;
     private MealAdapter artistsAdapter;
 
@@ -33,6 +32,8 @@ public class MealsFragment extends Fragment implements MealsScreen {
         super.onAttach(context);
 
         category = getActivity().getIntent().getStringExtra(CategoryActivity.KEY_CATEGORY);
+        String headerName = getString(R.string.nav_category_meals);
+        headerName = "Meals in " + category + "category";
         MealsPresenter.getInstance().attachScreen(this);
     }
 
@@ -74,6 +75,7 @@ public class MealsFragment extends Fragment implements MealsScreen {
         } else {
             showMeals(MealsPresenter.getInstance().getPrevResult());
         }
+        MealsPresenter.getInstance().refreshMeals(category);
     }
 
     public void showMeals(List<Meal> meals) {

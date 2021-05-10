@@ -7,6 +7,7 @@
         <item
             android:id="@+id/nav_category"
             android:icon="@drawable/ic_baseline_apps_24"
+            android:onClick="goToCategory"
             android:title="@string/menu_category" />
     </group>
 </menu>

@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/nav_category_category">
+    app:startDestination="@+id/nav_category_meals">
 
     <fragment
-        android:id="@+id/nav_category_category"
-        android:name="com.mobilsoftlab.mealapp.view.category.CategoryFragment"
-        android:label="@string/nav_category"
+        android:id="@+id/nav_category_meals"
+        android:name="com.mobilsoftlab.mealapp.view.meals.MealsFragment"
+        android:label="@string/nav_category_meals"
         tools:layout="@layout/category_layout"/>
 </navigation>
