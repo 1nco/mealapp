@@ -4,6 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="nav_category">Meal categories</string>
     <string name="nav_category_meals">Meals in category</string>
+    <string name="nav_recipe">Recipe</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>

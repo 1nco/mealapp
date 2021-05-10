@@ -1,6 +1,7 @@
 package com.mobilsoftlab.mealapp.view.meals;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +14,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mobilsoftlab.mealapp.R;
+import com.mobilsoftlab.mealapp.network.io.swagger.client.model.Category;
 import com.mobilsoftlab.mealapp.network.io.swagger.client.model.Meal;
 import com.mobilsoftlab.mealapp.view.category.CategoryActivity;
+import com.mobilsoftlab.mealapp.view.category.CategoryAdapter;
+import com.mobilsoftlab.mealapp.view.category.CategoryPresenter;
+import com.mobilsoftlab.mealapp.view.recipe.RecipeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MealsFragment extends Fragment implements MealsScreen {
     private RecyclerView recyclerViewMeals;
-    private SwipeRefreshLayout swipeRefreshLayoutArtists;
+    private SwipeRefreshLayout swipeRefreshLayoutMeals;
     private List<Meal> mealList;
-    private MealAdapter artistsAdapter;
+    private MealAdapter mealAdapter;
 
     private String category = "Seafood";
 
@@ -32,8 +37,6 @@ public class MealsFragment extends Fragment implements MealsScreen {
         super.onAttach(context);
 
         category = getActivity().getIntent().getStringExtra(CategoryActivity.KEY_CATEGORY);
-        String headerName = getString(R.string.nav_category_meals);
-        headerName = "Meals in " + category + "category";
         MealsPresenter.getInstance().attachScreen(this);
     }
 
@@ -53,15 +56,28 @@ public class MealsFragment extends Fragment implements MealsScreen {
         recyclerViewMeals.setLayoutManager(llm);
 
         mealList = new ArrayList<>();
-        artistsAdapter = new MealAdapter(getContext(), mealList);
-        recyclerViewMeals.setAdapter(artistsAdapter);
+        mealAdapter = new MealAdapter(getContext(), mealList);
+        recyclerViewMeals.setAdapter(mealAdapter);
 
-        swipeRefreshLayoutArtists = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutCategories);
+        swipeRefreshLayoutMeals = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutCategories);
 
-        swipeRefreshLayoutArtists.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayoutMeals.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 MealsPresenter.getInstance().refreshMeals(category);
+            }
+        });
+
+        mealAdapter.setOnItemClickListener(new MealAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Intent intent = new Intent(getActivity(), RecipeActivity.class);
+                if (mealList.isEmpty()) {
+                    mealList = MealsPresenter.getInstance().getPrevResult();
+                }
+                Meal meal = mealList.get(position);
+                intent.putExtra(MealsActivity.KEY_MEAL_ID, meal.getIdMeal());
+                startActivity(intent);
             }
         });
         return view;
@@ -79,27 +95,25 @@ public class MealsFragment extends Fragment implements MealsScreen {
     }
 
     public void showMeals(List<Meal> meals) {
-        if (swipeRefreshLayoutArtists != null) {
-            swipeRefreshLayoutArtists.setRefreshing(false);
+        if (swipeRefreshLayoutMeals != null) {
+            swipeRefreshLayoutMeals.setRefreshing(false);
         }
 
         mealList.clear();
         mealList.addAll(meals);
-        artistsAdapter.notifyDataSetChanged();
+        mealAdapter.notifyDataSetChanged();
 
         if (mealList.isEmpty()) {
             recyclerViewMeals.setVisibility(View.GONE);
-//            tvEmpty.setVisibility(View.VISIBLE);
         } else {
             recyclerViewMeals.setVisibility(View.VISIBLE);
-//            tvEmpty.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void showNetworkError(String errorMsg) {
-        if (swipeRefreshLayoutArtists != null) {
-            swipeRefreshLayoutArtists.setRefreshing(false);
+        if (swipeRefreshLayoutMeals != null) {
+            swipeRefreshLayoutMeals.setRefreshing(false);
         }
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
     }

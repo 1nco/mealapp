@@ -21,6 +21,9 @@ import com.mobilsoftlab.mealapp.view.category.CategoryActivity;
 
 public class MealsActivity extends AppCompatActivity {
 
+
+    public static final String KEY_MEAL_ID = "KEY_MEAL_ID";
+
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override

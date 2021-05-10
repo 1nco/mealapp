@@ -21,6 +21,8 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
     private Context context;
     private List<Meal> meals;
 
+    private static ClickListener clickListener;
+
     public MealAdapter(Context context, List<Meal> meals) {
         this.context = context;
         this.meals = meals;
@@ -46,7 +48,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
         return meals.size();
     }
 
-    protected static class ViewHolder extends RecyclerView.ViewHolder {
+    protected static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView ivImage;
         public TextView tvName;
 
@@ -54,6 +56,19 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
             super(itemView);
             ivImage = itemView.findViewById(R.id.category_imageView);
             tvName = itemView.findViewById(R.id.category_name);
+            itemView.setOnClickListener(this);
         }
+        @Override
+        public void onClick(View v) {
+            clickListener.onItemClick(getAdapterPosition(), v);
+        }
+    }
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        MealAdapter.clickListener = clickListener;
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
     }
 }
