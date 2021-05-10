@@ -16,12 +16,11 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.mobilsoftlab.mealapp.R;
 
-import javax.inject.Inject;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    @Inject
-    CategoryPresenter categoryPresenter;
+
+    public static final String KEY_CATEGORY = "KEY_CATEGORY";
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -72,15 +71,5 @@ public class CategoryActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 }
