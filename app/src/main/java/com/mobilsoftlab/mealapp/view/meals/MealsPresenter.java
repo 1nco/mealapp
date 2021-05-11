@@ -1,7 +1,15 @@
 package com.mobilsoftlab.mealapp.view.meals;
 
+import androidx.room.Room;
+
+import com.mobilsoftlab.mealapp.MealApplication;
 import com.mobilsoftlab.mealapp.interactor.meal.GetMealEvent;
 import com.mobilsoftlab.mealapp.interactor.meal.MealInteractor;
+import com.mobilsoftlab.mealapp.model.category.CategoryItem;
+import com.mobilsoftlab.mealapp.model.category.CategoryListDatabase;
+import com.mobilsoftlab.mealapp.model.meal.MealItem;
+import com.mobilsoftlab.mealapp.model.meal.MealListDatabase;
+import com.mobilsoftlab.mealapp.network.io.swagger.client.model.Category;
 import com.mobilsoftlab.mealapp.network.io.swagger.client.model.Meal;
 import com.mobilsoftlab.mealapp.view.Presenter;
 
@@ -65,8 +73,37 @@ public class MealsPresenter extends Presenter<MealsScreen> {
         } else {
             if (screen != null) {
                 prevResult = event.getMeals();
+                refreshDb();
                 screen.showMeals(event.getMeals());
             }
+        }
+    }
+
+    public void deleteAllItemsFromDb() {
+        MealListDatabase db = Room.databaseBuilder(MealApplication.getAppContext(), MealListDatabase.class, "meals-db").build();
+        for (MealItem mealItem: db.mealItemDao().getAll()) {
+            db.mealItemDao().deleteItem(mealItem);
+        }
+    }
+
+    public void refreshDb() {
+        networkExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                addItemsToDb();
+            }
+        });
+    }
+
+    public void addItemsToDb() {
+        deleteAllItemsFromDb();
+        MealListDatabase db = Room.databaseBuilder(MealApplication.getAppContext(), MealListDatabase.class, "meals-db").build();
+        for (Meal meal: prevResult) {
+            MealItem mealItem = new MealItem();
+            mealItem.id = meal.getIdMeal();
+            mealItem.name = meal.getStrMeal();
+            mealItem.thumbnail = meal.getStrMealThumb();
+            db.mealItemDao().insertAll(mealItem);
         }
     }
 
