@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.mobilsoftlab.mealapp.MealApplication;
 import com.mobilsoftlab.mealapp.R;
 
 import com.mobilsoftlab.mealapp.network.io.swagger.client.model.Category;
@@ -30,6 +32,7 @@ import java.util.List;
 
 
 public class CategoryFragment extends Fragment implements CategoryScreen {
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private RecyclerView recyclerView;
     private List<Category> categories;
@@ -41,6 +44,7 @@ public class CategoryFragment extends Fragment implements CategoryScreen {
     public void onAttach(final Context context) {
         super.onAttach(context);
         CategoryPresenter.getInstance().attachScreen(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override
@@ -81,6 +85,11 @@ public class CategoryFragment extends Fragment implements CategoryScreen {
                 }
                 Category category = categories.get(position);
                 intent.putExtra(CategoryActivity.KEY_CATEGORY, category.getStrCategory());
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, category.getIdCategory());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, category.getStrCategory());
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "category");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 startActivity(intent);
             }
         });

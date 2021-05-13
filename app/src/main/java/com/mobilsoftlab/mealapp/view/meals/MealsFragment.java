@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mobilsoftlab.mealapp.R;
 import com.mobilsoftlab.mealapp.network.io.swagger.client.model.Category;
 import com.mobilsoftlab.mealapp.network.io.swagger.client.model.Meal;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MealsFragment extends Fragment implements MealsScreen {
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     private RecyclerView recyclerViewMeals;
     private SwipeRefreshLayout swipeRefreshLayoutMeals;
     private List<Meal> mealList;
@@ -38,6 +41,7 @@ public class MealsFragment extends Fragment implements MealsScreen {
 
         category = getActivity().getIntent().getStringExtra(CategoryActivity.KEY_CATEGORY);
         MealsPresenter.getInstance().attachScreen(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override
@@ -77,6 +81,11 @@ public class MealsFragment extends Fragment implements MealsScreen {
                 }
                 Meal meal = mealList.get(position);
                 intent.putExtra(MealsActivity.KEY_MEAL_ID, meal.getIdMeal());
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, meal.getIdMeal());
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, meal.getStrMeal());
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "meal");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 startActivity(intent);
             }
         });
