@@ -1,3 +1,10 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="padding_left_16dp">16dp</dimen>
+    <dimen name="padding_top_16dp">16dp</dimen>
+    <dimen name="padding_right_16dp">16dp</dimen>
+    <dimen name="padding_bottom_16dp">16dp</dimen>
+    <dimen name="image_view_padding_top8dp">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
 </resources>
